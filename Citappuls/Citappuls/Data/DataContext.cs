@@ -10,11 +10,13 @@ namespace Citappuls.Data
 
         }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<Speciality> Specialties { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
+            modelBuilder.Entity<Speciality>().HasIndex(s => s.Name).IsUnique();
         }
     }
 }
