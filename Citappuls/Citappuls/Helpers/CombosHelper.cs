@@ -129,14 +129,19 @@ namespace Citappuls.Helpers
 
         public async Task<IEnumerable<SelectListItem>> GetComboUsersAsync()
         {
-            SelectListItem selListItem = new SelectListItem() { Value = "null", Text = "Select One" };
+            SelectListItem selListItem = new SelectListItem() { Value = "0", Text = "Admin" };
+            SelectListItem selListItems = new SelectListItem() { Value = "1", Text = "User" };
+            SelectListItem selListItemsc = new SelectListItem() { Value = "2", Text = "Pacient" };
+            SelectListItem selListItemsd = new SelectListItem() { Value = "3", Text = "Doctor" };
 
             //Create a list of select list items - this will be returned as your select list
             List<SelectListItem> list = new List<SelectListItem>();
 
             //Add select list item to list of selectlistitems
             list.Add(selListItem);
-
+            list.Add(selListItems);
+            list.Add(selListItemsc);
+            list.Add(selListItemsd);
             return list;
         }
     }

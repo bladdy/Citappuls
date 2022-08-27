@@ -10,11 +10,7 @@ using Citappuls.Models;
 
 namespace Citappuls.Controllers
 {
-    public class TiposUser
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
+    
     [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
