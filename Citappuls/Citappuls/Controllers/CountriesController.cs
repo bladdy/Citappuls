@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Citappuls.Data;
 using Citappuls.Data.Entities;
 using Citappuls.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Citappuls.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CountriesController : Controller
     {
         private readonly DataContext _context;

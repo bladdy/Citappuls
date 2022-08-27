@@ -1,10 +1,12 @@
 ﻿using Citappuls.Data;
 using Citappuls.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Citappuls.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SpecialitiesController : Controller
     {
         private readonly DataContext _context;
