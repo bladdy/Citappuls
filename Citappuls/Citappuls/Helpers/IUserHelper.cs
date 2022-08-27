@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 namespace Citappuls.Helpers
 {
     public interface IUserHelper
-    {
+    { 
         Task<User> AddUserAsync(AddUserViewModel model);
         Task<User> GetUserAsync(string email);
 
