@@ -38,8 +38,8 @@ namespace Citappuls.Models
 
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://localhost:7286/images/noimage.png"
-            : $"https://MI TIENDAprep.blob.core.windows.net/users/{ImageId}";
+            ? $"https://localhost:7118/img/noimage.png"
+            : $"https://shoppingzulu.blob.core.windows.net/users/{ImageId}";
 
         [Display(Name = "Image")]
         public IFormFile? ImageFile { get; set; }

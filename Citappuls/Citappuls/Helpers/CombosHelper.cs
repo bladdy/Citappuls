@@ -1,5 +1,6 @@
 ﻿using Citappuls.Data;
 using Citappuls.Data.Entities;
+using Citappuls.Enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
@@ -124,5 +125,20 @@ namespace Citappuls.Helpers
             return list;
 
         }
+        //TODO: Que acrguen los tipos de usarios
+
+        public async Task<IEnumerable<SelectListItem>> GetComboUsersAsync()
+        {
+            SelectListItem selListItem = new SelectListItem() { Value = "null", Text = "Select One" };
+
+            //Create a list of select list items - this will be returned as your select list
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            //Add select list item to list of selectlistitems
+            list.Add(selListItem);
+
+            return list;
+        }
     }
+    
 }
