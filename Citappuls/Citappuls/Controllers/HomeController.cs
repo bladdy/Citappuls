@@ -33,6 +33,5 @@ namespace Citappuls.Controllers
         {
             return View();
         }
-
     }
 }

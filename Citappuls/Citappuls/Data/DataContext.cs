@@ -25,5 +25,7 @@ namespace Citappuls.Data
             modelBuilder.Entity<State>().HasIndex("Name", "CountryId").IsUnique();
             modelBuilder.Entity<Speciality>().HasIndex(s => s.Name).IsUnique();
         }
+
+        public DbSet<Citappuls.Data.Entities.AppoitmentRequest>? AppoitmentRequest { get; set; }
     }
 }
