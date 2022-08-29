@@ -55,6 +55,55 @@ namespace Citappuls.Helpers
 
         }
 
+        public async Task<IEnumerable<SelectListItem>> GetComboDoctorAsync()
+        {
+            List<SelectListItem> list = await _context.Doctors.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = $"{c.Id}"
+
+            })
+               .OrderBy(c => c.Text)
+               .ToListAsync();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione una Doctor...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboDoctorAsync(IEnumerable<Doctor> filter)
+        {
+            List<Doctor> categories = await _context.Doctors.ToListAsync();
+            List<Doctor> categoriesFiltered = new();
+            foreach (Doctor category in categories)
+            {
+                if (!filter.Any(c => c.Id == category.Id))
+                {
+                    categoriesFiltered.Add(category);
+                }
+            }
+            List<SelectListItem> list = categoriesFiltered.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = $"{c.Id}"
+
+            })
+                .OrderBy(c => c.Text)
+                .ToList();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione una Docotor...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+
         public async Task<IEnumerable<SelectListItem>> GetComboSpecialitesAsync()
         {
             List<SelectListItem> list = await _context.Specialties.Select(c => new SelectListItem

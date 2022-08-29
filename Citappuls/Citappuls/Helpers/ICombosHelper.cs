@@ -7,6 +7,8 @@ namespace Citappuls.Helpers
     {
         Task<IEnumerable<SelectListItem>> GetComboSpecialitesAsync();
         Task<IEnumerable<SelectListItem>> GetComboSpecialitesAsync(IEnumerable<Speciality> filter);
+        Task<IEnumerable<SelectListItem>> GetComboDoctorAsync();
+        Task<IEnumerable<SelectListItem>> GetComboDoctorAsync(IEnumerable<Doctor> filter);
 
         Task<IEnumerable<SelectListItem>> GetComboCountriesAsync();
 

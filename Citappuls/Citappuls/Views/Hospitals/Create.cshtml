@@ -1,0 +1,93 @@
+﻿@model Citappuls.Models.CreateHospitalViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<div class="container mt-5">
+    <h1>Crear</h1>
+
+    <h4>Hospital</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <input type="hidden" asp-for="Id"/>
+                <input type="hidden" asp-for="Specialities" />
+                <input type="hidden" asp-for="Doctors" />
+                <input type="hidden" asp-for="Countries" />
+                <input type="hidden" asp-for="States" />
+                <input type="hidden" asp-for="Cities" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="States" />
+                <partial name="_CreateHospitals" />
+
+                <br />
+                <div class="form-group">
+                    <input type="submit" value="Crear" class="btn btn-outline-primary" />
+                    <a asp-action="Index" class="btn btn-outline-warning">Volver a la lista</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+    
+    
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#CountryId").change(function () {
+            debugger;
+            $("#StateId").empty();
+            $("#StateId").append('<option value="0">[Selecciona un departamento/estado...]</option>');
+            $("#CityId").empty();
+            $("#CityId").append('<option value="0">[Selecciona una ciudad...]</option>');
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetStates")',
+                dataType: 'json',
+                data: { countryId: $("#CountryId").val() },
+                success: function (states) {
+                    $.each(states, function (i, state) {
+                        $("#StateId").append('<option value="'
+                            + state.id + '">'
+                            + state.name + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+
+        $("#StateId").change(function () {
+            $("#CityId").empty();
+            $("#CityId").append('<option value="0">[Selecciona una ciudad...]</option>');
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetCities")',
+                dataType: 'json',
+                data: { stateId: $("#StateId").val() },
+                success: function (cities) {
+                    $.each(cities, function (i, city) {
+                        debugger;
+                        $("#CityId").append('<option value="'
+                            + city.id + '">'
+                            + city.name + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve cities.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+}

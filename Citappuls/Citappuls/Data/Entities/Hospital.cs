@@ -4,6 +4,7 @@ namespace Citappuls.Data.Entities
 {
     public class Hospital
     {
+        public int Id { get; set; }
         [Display(Name = "Nombres")]
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
@@ -18,6 +19,13 @@ namespace Citappuls.Data.Entities
         [MaxLength(200, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Address { get; set; }
+        public ICollection<HospitalSpeciality> HospitalSpecialities { get; set; }
+
+        [Display(Name = "Especialidades")]
+        public int EspecialidadesNumber => HospitalSpecialities == null ? 0 : HospitalSpecialities.Count;
+        public ICollection<HospitalDoctor>? HospitalDoctors { get; set; }
+        [Display(Name = "Doctores")]
+        public int DoctorNumber => HospitalDoctors == null ? 0 : HospitalDoctors.Count;
 
         [Display(Name = "Ciudad")]
         public City City { get; set; }
