@@ -13,5 +13,6 @@ namespace Citappuls.Data.Entities
         [JsonIgnore]
         public State State { get; set; }
         public ICollection<User> Users { get; set; }
+        //public ICollection<Hospital> Hospitals  { get; set; }
     }
 }

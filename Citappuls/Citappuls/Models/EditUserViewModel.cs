@@ -5,7 +5,6 @@ namespace Citappuls.Models
 {
     public class EditUserViewModel
     {
-
         public string Id { get; set; }
 
         [Display(Name = "Documento")]

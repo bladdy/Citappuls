@@ -76,6 +76,16 @@ namespace Citappuls.Helpers
             }
         }
 
+        public async Task<IdentityResult> ConfirmEmailAsync(User user, string token)
+        {
+            return await _userManager.ConfirmEmailAsync(user, token);
+        }
+
+        public async Task<string> GenerateEmailConfirmationTokenAsync(User user)
+        {
+            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        }
+
         public async Task<User> GetUserAsync(string email)
         {
             return await _context.Users
@@ -105,13 +115,22 @@ namespace Citappuls.Helpers
                     model.Username,
                     model.Password,
                     model.RememberMe,
-                    false);
+                    true);
 
         }
 
         public async Task LogoutAsync()
         {
             await _signInManager.SignOutAsync();
+        }
+        public async Task<string> GeneratePasswordResetTokenAsync(User user)
+        {
+            return await _userManager.GeneratePasswordResetTokenAsync(user);
+        }
+
+        public async Task<IdentityResult> ResetPasswordAsync(User user, string token, string password)
+        {
+            return await _userManager.ResetPasswordAsync(user, token, password);
         }
 
         public async Task<IdentityResult> UpdateUserAsync(User user)

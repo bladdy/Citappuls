@@ -27,6 +27,6 @@ namespace Citappuls.Data.Entities
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
             ? $"https://localhost:7286/img/noimage.png"
-            : $"https://MI TIENDAprep.blob.core.windows.net/users/{ImageId}";
+            : $"https://shoppingzulu.blob.core.windows.net/users/{ImageId}";
     }
 }
