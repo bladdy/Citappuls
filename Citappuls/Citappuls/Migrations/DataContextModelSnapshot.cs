@@ -78,8 +78,19 @@ namespace Citappuls.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Exequatur")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(450)");
@@ -89,7 +100,14 @@ namespace Citappuls.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.HasIndex("Name", "LastName")
                         .IsUnique()
@@ -496,6 +514,15 @@ namespace Citappuls.Migrations
                         .HasForeignKey("StateId");
 
                     b.Navigation("State");
+                });
+
+            modelBuilder.Entity("Citappuls.Data.Entities.Doctor", b =>
+                {
+                    b.HasOne("Citappuls.Data.Entities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("Citappuls.Data.Entities.Hospital", b =>

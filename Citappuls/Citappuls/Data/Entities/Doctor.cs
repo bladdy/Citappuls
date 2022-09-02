@@ -10,19 +10,31 @@ namespace Citappuls.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Name { get; set; }
         public string LastName { get; set; }
-
+        [Display(Name = "Dirección")]
+        [MaxLength(200, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public string Address { get; set; }
+        [Display(Name = "Telefonos")]
+        [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public string Phone { get; set; }
         public ICollection<HospitalDoctor> HospitalDoctors { get; set; }
         public string Exequatur { get; set; }
 
         public ICollection<SpecialityDoctor> SpecialityDoctor { get; set; }
-        //[Display(Name = "Hospital")]
-        //public ICollection<Hospital> Hospital { get; set; }
+        [Display(Name = "Hospitales")]
+        public int HospitalNumber => HospitalDoctors == null ? 0 : HospitalDoctors.Count;
+        [Display(Name = "Especialidades")]
+        public int EspecialidadesNumber => SpecialityDoctor == null ? 0 : SpecialityDoctor.Count;
 
-        //[Display(Name = "Horarios")]
-        //public ICollection<Schedule> Schedules { get; set; }
+        [Display(Name = "Ciudad")]
+        public City City { get; set; }
+        [Display(Name = "Foto")]
+        public Guid ImageId { get; set; }
 
-        //public ICollection<Speciality> Specialities { get; set; }
-
-
+        [Display(Name = "Foto")]
+        public string ImageFullPath => ImageId == Guid.Empty
+            ? $"https://localhost:7286/img/noimage.png"
+            : $"https://shoppingzulu.blob.core.windows.net/users/{ImageId}";
     }
 }

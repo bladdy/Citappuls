@@ -1,12 +1,17 @@
-﻿@model Citappuls.Models.CreateHospitalViewModel
+﻿@model Citappuls.Models.AddDoctorViewModel
 
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col">
         <div class="form-group">
             <label asp-for="Name" class="control-label"></label>
             <input asp-for="Name" class="form-control" />
             <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName" class="control-label"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Address" class="control-label"></label>
@@ -19,19 +24,24 @@
             <input asp-for="Phone" class="form-control" />
             <span asp-validation-for="Phone" class="text-danger"></span>
         </div>
-        
+
         <div class="form-group">
             <label asp-for="SpecialityId" class="control-label"></label>
-            <select asp-for="SpecialityId" asp-items="Model.Specialities" class="form-control" data-live-search="true"></select>
+            <select asp-for="SpecialityId" asp-items="Model.Specialities" class="form-control"></select>
             <span asp-validation-for="SpecialityId" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="DoctorId" class="control-label"></label>
-            <select asp-for="DoctorId" asp-items="Model.Doctors" class="form-control"></select>
-            <span asp-validation-for="DoctorId" class="text-danger"></span>
+            <label asp-for="HospitalsId" class="control-label"></label>
+            <select asp-for="HospitalsId"  id="selectFiltered" asp-items="Model.Hospitals" class="form-control"></select>
+            <span asp-validation-for="HospitalsId" class="text-danger"></span>
         </div>
-    </div>    
-    <div class="col-md-6">
+    </div>
+    <div class="col">
+        <div class="form-group">
+            <label asp-for="Exequatur" class="control-label"></label>
+            <input asp-for="Exequatur" class="form-control" />
+            <span asp-validation-for="Exequatur" class="text-danger"></span>
+        </div>
         <div class="form-group">
             <label asp-for="ImageFile" class="control-label"></label>
             <input asp-for="ImageFile" class="form-control" type="file" />
@@ -43,19 +53,18 @@
             <select asp-for="CountryId" asp-items="Model.Countries" class="form-control"></select>
             <span asp-validation-for="CountryId" class="text-danger"></span>
         </div>
-       
+
         <div class="form-group">
             <label asp-for="StateId" class="control-label"></label>
             <select asp-for="StateId" asp-items="Model.States" class="form-control"></select>
             <span asp-validation-for="StateId" class="text-danger"></span>
         </div>
-
-
         <div class="form-group">
             <label asp-for="CityId" class="control-label"></label>
             <select asp-for="CityId" asp-items="Model.Cities" class="form-control"></select>
             <span asp-validation-for="CityId" class="text-danger"></span>
         </div>
-    </div>    
+       
+    </div>
 </div>
 

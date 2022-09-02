@@ -59,7 +59,7 @@ namespace Citappuls.Helpers
         {
             List<SelectListItem> list = await _context.Doctors.Select(c => new SelectListItem
             {
-                Text = c.Name,
+                Text = c.Name.ToUpper() +" "+c.LastName.ToUpper(),
                 Value = $"{c.Id}"
 
             })
@@ -80,6 +80,55 @@ namespace Citappuls.Helpers
             List<Doctor> categories = await _context.Doctors.ToListAsync();
             List<Doctor> categoriesFiltered = new();
             foreach (Doctor category in categories)
+            {
+                if (!filter.Any(c => c.Id == category.Id))
+                {
+                    categoriesFiltered.Add(category);
+                }
+            }
+            List<SelectListItem> list = categoriesFiltered.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = $"{c.Id}"
+
+            })
+                .OrderBy(c => c.Text)
+                .ToList();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione una Docotor...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboHospitalsAsync()
+        {
+            List<SelectListItem> list = await _context.Hospitals.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = $"{c.Id}"
+
+            })
+                .OrderBy(c => c.Text)
+                .ToListAsync();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione una Hospitales...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboHospitalsAsync(IEnumerable<Doctor> filter)
+        {
+            List<Hospital> categories = await _context.Hospitals.ToListAsync();
+            List<Hospital> categoriesFiltered = new();
+            foreach (Hospital category in categories)
             {
                 if (!filter.Any(c => c.Id == category.Id))
                 {

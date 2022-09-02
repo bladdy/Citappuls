@@ -5,15 +5,14 @@ using Citappuls.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 namespace Citappuls.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class HospitalsController : Controller
+    public class DoctorsController : Controller
     {
         private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
-        public HospitalsController(DataContext context, ICombosHelper combosHelper)
+        public DoctorsController(DataContext context, ICombosHelper combosHelper)
         {
             _context = context;
             _combosHelper = combosHelper;
@@ -21,9 +20,9 @@ namespace Citappuls.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Hospitals
+            return View(await _context.Doctors
                 .Include(h => h.HospitalDoctors)
-                .Include(h => h.HospitalSpecialities)
+                .Include(h => h.SpecialityDoctor)
                 .ThenInclude(hs => hs.Speciality)
                 .Include(u => u.City)
                 .ThenInclude(c => c.State)
@@ -32,13 +31,13 @@ namespace Citappuls.Controllers
         }
         public async Task<IActionResult> Create()
         {
-            CreateHospitalViewModel model = new()
+            AddDoctorViewModel model = new()
             {
                 Specialities = await _combosHelper.GetComboSpecialitesAsync(),
                 Countries = await _combosHelper.GetComboCountriesAsync(),
+                Hospitals = await _combosHelper.GetComboHospitalsAsync(),
                 States = await _combosHelper.GetComboStatesAsync(0),
                 Cities = await _combosHelper.GetComboCitiesAsync(0),
-                Doctors = await _combosHelper.GetComboDoctorAsync()
                 //DoctorId = 1
 
             };
@@ -46,7 +45,7 @@ namespace Citappuls.Controllers
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CreateHospitalViewModel model)
+        public async Task<IActionResult> Create(AddDoctorViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -56,32 +55,33 @@ namespace Citappuls.Controllers
                 {
                     imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
                 }*/
-                Hospital hospital = new()
+                Doctor doctor = new()
                 {
                     Name = model.Name,
+                    LastName = model.LastName,
                     Address = model.Address,
                     Phone = model.Phone,
 
                 };
-                
-                hospital.HospitalSpecialities = new List<HospitalSpeciality>()
+
+                doctor.SpecialityDoctor = new List<SpecialityDoctor>()
                 {
-                    new HospitalSpeciality
+                    new SpecialityDoctor
                     {
                         Speciality = await _context.Specialties.FindAsync(model.SpecialityId) ,
                     }
                 };
-                hospital.HospitalDoctors = new List<HospitalDoctor>()
+                doctor.HospitalDoctors = new List<HospitalDoctor>()
                 {
                     new HospitalDoctor
-                    {                                           //model.DoctorId
-                        Doctor = await _context.Doctors.FindAsync(model.DoctorId) ,
+                    {                                           //model.HospitalsId
+                        Hospital = await _context.Hospitals.FindAsync(model.HospitalsId) ,
                     }
                 };
-                hospital.City = await _context.Cities.FindAsync(model.CityId);
+                doctor.City = await _context.Cities.FindAsync(model.CityId);
                 try
                 {
-                    _context.Add(hospital);
+                    _context.Add(doctor);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
@@ -92,8 +92,8 @@ namespace Citappuls.Controllers
                 }
             }
             model.Specialities = await _combosHelper.GetComboSpecialitesAsync();
-            model.Doctors = await _combosHelper.GetComboDoctorAsync();
-            model.Countries = await _combosHelper.GetComboCountriesAsync();
+            model.Hospitals = await _combosHelper.GetComboDoctorAsync();
+            model.Countries = await _combosHelper.GetComboHospitalsAsync();
             model.States = await _combosHelper.GetComboStatesAsync(model.CountryId);
             model.Cities = await _combosHelper.GetComboCitiesAsync(model.StateId);
             return View(model);
@@ -120,6 +120,5 @@ namespace Citappuls.Controllers
             }
             return Json(state.Cities.OrderBy(c => c.Name));
         }
-
     }
 }

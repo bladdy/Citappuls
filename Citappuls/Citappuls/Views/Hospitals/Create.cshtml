@@ -10,7 +10,7 @@
     <h4>Hospital</h4>
     <hr />
     <div class="row">
-        <div class="col-md-4">
+    <div class="col-md-12">
             <form asp-action="Create">
                 <input type="hidden" asp-for="Id"/>
                 <input type="hidden" asp-for="Specialities" />
@@ -19,7 +19,6 @@
                 <input type="hidden" asp-for="States" />
                 <input type="hidden" asp-for="Cities" />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="States" />
                 <partial name="_CreateHospitals" />
 
                 <br />

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Citappuls.Models
 {
-    public class CreateHospitalViewModel : EditeHospitalViewModel
+    public class AddDoctorViewModel : EditeDoctorViewModel
     {
         [Display(Name = "Especialidades")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una Especialidad.")]
@@ -12,12 +12,11 @@ namespace Citappuls.Models
 
         public IEnumerable<SelectListItem> Specialities { get; set; }
 
-        [Display(Name = "Doctores")]
-        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una Doctor.")]
+        [Display(Name = "Hospitales")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una Hospital.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public int DoctorId { get; set; }
+        public int HospitalsId { get; set; }
 
-        public IEnumerable<SelectListItem> Doctors { get; set; }
-       
+        public IEnumerable<SelectListItem> Hospitals { get; set; }
     }
 }
