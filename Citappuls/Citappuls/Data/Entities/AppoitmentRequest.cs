@@ -6,7 +6,6 @@ namespace Citappuls.Data.Entities
     public class AppoitmentRequest
     {
         [Key]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int Id { get; set; }
         public User? User { get; set; }
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]

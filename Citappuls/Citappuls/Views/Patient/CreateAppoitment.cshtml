@@ -1,0 +1,142 @@
+﻿@model Citappuls.Models.AddAppoitmentViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container mt-5">
+    <h1>Crear</h1>
+
+    <h4>Citas</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="CreateAppoitment">
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Specialities" />
+                <input type="hidden" asp-for="Hospitals" />
+                <input type="hidden" asp-for="User" />
+                <input type="hidden" asp-for="Patient" />
+                <input type="hidden" asp-for="Doctors" />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Patient.FullName" class="control-label"></label>
+                    <input asp-for="Patient.FullName" class="form-control" />
+                    <span asp-validation-for="Patient.FullName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HospitalsId" class="control-label"></label>
+                    <select asp-for="HospitalsId" asp-items="Model.Hospitals" class="form-control" data-live-search="true"></select>
+                    <span asp-validation-for="HospitalsId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SpecialityId" class="control-label"></label>
+                    <select asp-for="SpecialityId" asp-items="Model.Specialities" class="form-control" data-live-search="true"></select>
+                    <span asp-validation-for="SpecialityId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DoctorId" class="control-label"></label>
+                    <select asp-for="DoctorId" id="selectFiltered" asp-items="Model.Doctors" class="form-control"></select>
+                    <span asp-validation-for="DoctorId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Date" class="control-label"></label>
+                    <input asp-for="Date" class="form-control" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Time" class="control-label"></label>
+                    <input asp-for="Time" class="form-control" />
+                    <span asp-validation-for="Time" class="text-danger"></span>
+                </div>
+                <div class="form-check">
+                    <label asp-for="Subsequent" class="form-check-label"></label>
+                    <input asp-for="Subsequent" type="checkbox" class="form-check-input" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Nota" class="control-label"></label>
+                    <textarea asp-for="Nota" class="form-control"></textarea>
+                    <span asp-validation-for="Nota" class="text-danger"></span>
+                </div>
+                <br />
+
+                <div class="form-group">
+                    <input type="submit" value="Crear" class="btn btn-outline-primary" />
+                    <a asp-action="Index" class="btn btn-outline-warning">Volver a la lista</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    <script type="text/javascript">
+        $(function (){
+            $("#selectFiltered").select2();
+        });
+        $(function () {
+        $('select').selectpicker();
+        });
+        $(document).ready(function () {
+            $("#CountryId").change(function () {
+                debugger;
+                $("#StateId").empty();
+                $("#StateId").append('<option value="0">[Selecciona un departamento/estado...]</option>');
+                $("#CityId").empty();
+                $("#CityId").append('<option value="0">[Selecciona una ciudad...]</option>');
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetStates")',
+                    dataType: 'json',
+                    data: { countryId: $("#CountryId").val() },
+                    success: function (states) {
+                        $.each(states, function (i, state) {
+                            $("#StateId").append('<option value="'
+                                + state.id + '">'
+                                + state.name + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+            })
+
+            $("#StateId").change(function () {
+                $("#CityId").empty();
+                $("#CityId").append('<option value="0">[Selecciona una ciudad...]</option>');
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetCities")',
+                    dataType: 'json',
+                    data: { stateId: $("#StateId").val() },
+                    success: function (cities) {
+                        $.each(cities, function (i, city) {
+                            debugger;
+                            $("#CityId").append('<option value="'
+                                + city.id + '">'
+                                + city.name + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve cities.' + ex);
+                    }
+                });
+                return false;
+            })
+        });
+    </script>
+}
+
+
+}
+}
+

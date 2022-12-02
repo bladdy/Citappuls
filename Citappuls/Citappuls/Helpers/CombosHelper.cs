@@ -97,7 +97,27 @@ namespace Citappuls.Helpers
 
             list.Insert(0, new SelectListItem
             {
-                Text = "[Seleccione una Docotor...]",
+                Text = "[Seleccione una Doctor...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboHealthInsuranceAsync()
+        {
+            List<SelectListItem> list = await _context.HealthInsurances.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = $"{c.Id}"
+
+            })
+               .OrderBy(c => c.Text)
+               .ToListAsync();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione un Seguro Medico...]",
                 Value = "0"
             });
 
@@ -124,7 +144,7 @@ namespace Citappuls.Helpers
             return list;
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetComboHospitalsAsync(IEnumerable<Doctor> filter)
+        public async Task<IEnumerable<SelectListItem>> GetComboHospitalsAsync(IEnumerable<Hospital> filter)
         {
             List<Hospital> categories = await _context.Hospitals.ToListAsync();
             List<Hospital> categoriesFiltered = new();
@@ -146,7 +166,47 @@ namespace Citappuls.Helpers
 
             list.Insert(0, new SelectListItem
             {
-                Text = "[Seleccione una Docotor...]",
+                Text = "[Seleccione una Hospital...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboMaritalStatusAsync()
+        {
+            List<SelectListItem> list = await _context.MaritalStatusTypes.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = $"{c.Id}"
+
+            })
+                .OrderBy(c => c.Text)
+                .ToListAsync();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione un Estado Civil...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboSexTypeAsync()
+        {
+            List<SelectListItem> list = await _context.SexTypes.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = $"{c.Id}"
+
+            })
+                .OrderBy(c => c.Text)
+                .ToListAsync();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione un Genero...]",
                 Value = "0"
             });
 
@@ -195,7 +255,7 @@ namespace Citappuls.Helpers
 
             list.Insert(0, new SelectListItem
             {
-                Text = "[Seleccione una categoría...]",
+                Text = "[Seleccione una Especialidad...]",
                 Value = "0"
             });
 

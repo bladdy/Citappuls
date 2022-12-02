@@ -3,10 +3,11 @@ using Citappuls.Data.Entities;
 using Citappuls.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Vereyon.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container. subir app https://www.youtube.com/watch?v=epydH2x0yaM&t=768s
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DataContext>(o =>
 {
@@ -44,6 +45,8 @@ builder.Services.AddScoped<IMailHelper, MailHelper>();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
+builder.Services.AddFlashMessage();
 var app = builder.Build();
 SeedData();
 
@@ -53,8 +56,16 @@ void SeedData()
     IServiceScopeFactory? scopeFactory = app.Services.GetService<IServiceScopeFactory>();
     using (IServiceScope? scope = scopeFactory.CreateScope())
     {
-        SeedDB? service = scope.ServiceProvider.GetService<SeedDB>();
-        service.SeedAsync().Wait();
+        try
+        {
+            SeedDB? service = scope.ServiceProvider.GetService<SeedDB>();
+            service.SeedAsync().Wait();
+        }
+        catch (Exception e)
+        {
+
+            throw;
+        }
     }
 }
 // Configure the HTTP request pipeline.

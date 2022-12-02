@@ -9,17 +9,32 @@ namespace Citappuls.Models
         [Key]
         public int Id { get; set; }
         public User User { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
-        public string Hopital { get; set; }
-        public IEnumerable<SelectListItem> Speciality { get; set; }
-        public string Doctor { get; set; }
+        public Patient Patient { get; set; }
+
+        [Display(Name = "Doctor")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una Doctor.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public int DoctorId { get; set; }
+
+        public IEnumerable<SelectListItem> Doctors { get; set; }
+        [Display(Name = "Hospitales")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una Hospital.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public int HospitalsId { get; set; }
+        public IEnumerable<SelectListItem> Hospitals { get; set; }
+        [Display(Name = "Especialidades")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una Especialidad.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public int SpecialityId { get; set; }
+
+        public IEnumerable<SelectListItem> Specialities { get; set; }
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
         [DataType(DataType.Time)]
         public DateTime Time { get; set; }
-        public string Schedule { get; set; }
         [DataType(DataType.MultilineText)]
-        public string Nota { get; set; }
+        [Display(Name = "Subsecuente")]
+        public bool Subsequent { get; set; }
+        public string? Nota { get; set; }
     }
 }

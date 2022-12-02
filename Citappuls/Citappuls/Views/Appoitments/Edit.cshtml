@@ -1,0 +1,70 @@
+﻿@model Citappuls.Models.AddAppoitmentViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container mt-5">
+    <h1>Editar</h1>
+
+    <h4>Citas</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="Edit">
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Specialities" />
+                <input type="hidden" asp-for="Hospitals" />
+                <input type="hidden" asp-for="User" />
+                <input type="hidden" asp-for="Patient" />
+                <input type="hidden" asp-for="Doctors" />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Patient.FullName" class="control-label"></label>
+                    <input asp-for="Patient.FullName" class="form-control" />
+                    <span asp-validation-for="Patient.FullName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HospitalsId" class="control-label"></label>
+                    <select asp-for="HospitalsId" asp-items="Model.Hospitals" class="form-control" data-live-search="true"></select>
+                    <span asp-validation-for="HospitalsId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SpecialityId" class="control-label"></label>
+                    <select asp-for="SpecialityId" asp-items="Model.Specialities" class="form-control" data-live-search="true"></select>
+                    <span asp-validation-for="SpecialityId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DoctorId" class="control-label"></label>
+                    <select asp-for="DoctorId" id="selectFiltered" asp-items="Model.Doctors" class="form-control"></select>
+                    <span asp-validation-for="DoctorId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Date" class="control-label"></label>
+                    <input asp-for="Date" class="form-control" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Time" class="control-label"></label>
+                    <input asp-for="Time" class="form-control" />
+                    <span asp-validation-for="Time" class="text-danger"></span>
+                </div>
+                <div class="form-check">
+                    <label asp-for="Subsequent" class="form-check-label"></label>
+                    <input asp-for="Subsequent" type="checkbox" class="form-check-input" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Nota" class="control-label"></label>
+                    <textarea asp-for="Nota" class="form-control"></textarea>
+                    <span asp-validation-for="Nota" class="text-danger"></span>
+                </div>
+                <br />
+
+                <div class="form-group">
+                    <input type="submit" value="Editar" class="btn btn-outline-primary" />
+                    <a asp-action="Index" class="btn btn-outline-warning">Volver a la lista</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

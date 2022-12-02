@@ -22,6 +22,62 @@ namespace Citappuls.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Citappuls.Data.Entities.Appointment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("AppointmentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HospitalId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SpecialityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StatusType")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("Subsequent")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("HospitalId");
+
+                    b.HasIndex("PatientId");
+
+                    b.HasIndex("SpecialityId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Appointments");
+                });
+
             modelBuilder.Entity("Citappuls.Data.Entities.City", b =>
                 {
                     b.Property<int>("Id")
@@ -116,6 +172,31 @@ namespace Citappuls.Migrations
                     b.ToTable("Doctors");
                 });
 
+            modelBuilder.Entity("Citappuls.Data.Entities.HealthInsurance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<double>("Percentage")
+                        .HasMaxLength(50)
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("HealthInsurances");
+                });
+
             modelBuilder.Entity("Citappuls.Data.Entities.Hospital", b =>
                 {
                     b.Property<int>("Id")
@@ -203,6 +284,108 @@ namespace Citappuls.Migrations
                         .HasFilter("[HospitalId] IS NOT NULL AND [SpecialityId] IS NOT NULL");
 
                     b.ToTable("HospitalSpecialities");
+                });
+
+            modelBuilder.Entity("Citappuls.Data.Entities.MaritalStatusType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MaritalStatusTypes");
+                });
+
+            modelBuilder.Entity("Citappuls.Data.Entities.Patient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateofBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Document")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("HealthInsuranceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HealthInsuranceNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("MaritalStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nationality")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SexTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("HealthInsuranceId");
+
+                    b.HasIndex("MaritalStatusId");
+
+                    b.HasIndex("SexTypeId");
+
+                    b.HasIndex("FirstName", "LastName", "DateofBirth")
+                        .IsUnique();
+
+                    b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("Citappuls.Data.Entities.SexType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SexTypes");
                 });
 
             modelBuilder.Entity("Citappuls.Data.Entities.Speciality", b =>
@@ -507,6 +690,47 @@ namespace Citappuls.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Citappuls.Data.Entities.Appointment", b =>
+                {
+                    b.HasOne("Citappuls.Data.Entities.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Citappuls.Data.Entities.Hospital", "Hospital")
+                        .WithMany()
+                        .HasForeignKey("HospitalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Citappuls.Data.Entities.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Citappuls.Data.Entities.Speciality", "Speciality")
+                        .WithMany()
+                        .HasForeignKey("SpecialityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Citappuls.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Hospital");
+
+                    b.Navigation("Patient");
+
+                    b.Navigation("Speciality");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Citappuls.Data.Entities.City", b =>
                 {
                     b.HasOne("Citappuls.Data.Entities.State", "State")
@@ -562,6 +786,41 @@ namespace Citappuls.Migrations
                     b.Navigation("Hospital");
 
                     b.Navigation("Speciality");
+                });
+
+            modelBuilder.Entity("Citappuls.Data.Entities.Patient", b =>
+                {
+                    b.HasOne("Citappuls.Data.Entities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Citappuls.Data.Entities.HealthInsurance", "HealthInsurance")
+                        .WithMany("Patients")
+                        .HasForeignKey("HealthInsuranceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Citappuls.Data.Entities.MaritalStatusType", "MaritalStatus")
+                        .WithMany()
+                        .HasForeignKey("MaritalStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Citappuls.Data.Entities.SexType", "SexType")
+                        .WithMany()
+                        .HasForeignKey("SexTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("HealthInsurance");
+
+                    b.Navigation("MaritalStatus");
+
+                    b.Navigation("SexType");
                 });
 
             modelBuilder.Entity("Citappuls.Data.Entities.SpecialityDoctor", b =>
@@ -663,6 +922,11 @@ namespace Citappuls.Migrations
                     b.Navigation("HospitalDoctors");
 
                     b.Navigation("SpecialityDoctor");
+                });
+
+            modelBuilder.Entity("Citappuls.Data.Entities.HealthInsurance", b =>
+                {
+                    b.Navigation("Patients");
                 });
 
             modelBuilder.Entity("Citappuls.Data.Entities.Hospital", b =>

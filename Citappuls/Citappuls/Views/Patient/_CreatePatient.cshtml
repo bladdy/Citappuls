@@ -1,0 +1,82 @@
+﻿@model Citappuls.Models.AddPatientViewModel
+
+<div class="row">
+    <div class="col">
+        <div class="form-group">
+            <label asp-for="FirstName" class="control-label"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName" class="control-label"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Document" class="control-label"></label>
+            <input asp-for="Document" class="form-control" />
+            <span asp-validation-for="Document" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DateofBirth" class="control-label"></label>
+            <input asp-for="DateofBirth" class="form-control" />
+            <span asp-validation-for="DateofBirth" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Phone" class="control-label"></label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="SexTypeId" class="control-label"></label>
+            <select asp-for="SexTypeId" asp-items="Model.SexTypes" class="form-control"></select>
+            <span asp-validation-for="SexTypeId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MaritalStatusTypeId" class="control-label"></label>
+            <select asp-for="MaritalStatusTypeId" asp-items="Model.MaritalStatusType" class="form-control"></select>
+            <span asp-validation-for="MaritalStatusTypeId" class="text-danger"></span>
+        </div>
+
+
+    </div>
+    <div class="col">
+        <div class="form-group">
+            <label asp-for="HealthInsurancesId" class="control-label"></label>
+            <select asp-for="HealthInsurancesId" asp-items="Model.HealthInsurances" class="form-control"></select>
+            <span asp-validation-for="HealthInsurancesId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="HealthInsuranceNumber" class="control-label"></label>
+            <input asp-for="HealthInsuranceNumber" class="form-control" />
+            <span asp-validation-for="HealthInsuranceNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Nationality" class="control-label"></label>
+            <input asp-for="Nationality" class="form-control" />
+            <span asp-validation-for="Nationality" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CountryId" class="control-label"></label>
+            <select asp-for="CountryId" asp-items="Model.Countries" class="form-control"></select>
+            <span asp-validation-for="CountryId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="StateId" class="control-label"></label>
+            <select asp-for="StateId" asp-items="Model.States" class="form-control"></select>
+            <span asp-validation-for="StateId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CityId" class="control-label"></label>
+            <select asp-for="CityId" asp-items="Model.Cities" class="form-control"></select>
+            <span asp-validation-for="CityId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Address" class="control-label"></label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+
+    </div>
+</div>

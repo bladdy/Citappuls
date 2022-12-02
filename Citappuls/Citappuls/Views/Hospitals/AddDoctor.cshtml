@@ -1,0 +1,35 @@
+﻿@model Citappuls.Models.AddHospitalDoctorsViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="container mt-5">
+    <h1>Crear</h1>
+
+    <h4>Especialidad / Hospitals</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="AddDoctor" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="HospitalId" />
+                <input type="hidden" asp-for="Doctors" />
+                <div class="form-group">
+                    <label asp-for="DoctorId" class="control-label"></label>
+                    <select asp-for="DoctorId" asp-items="Model.Doctors" class="form-control"></select>
+                    <span asp-validation-for="DoctorId" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="submit" value="Crear" class="btn btn-outline-primary" />
+                    <a asp-action="Details" asp-route-id="@Model.HospitalId" class="btn btn-outline-success">Regresar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

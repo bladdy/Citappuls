@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Citappuls.Migrations
 {
-    public partial class addDoctor : Migration
+    public partial class creatingDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,6 +34,46 @@ namespace Citappuls.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Countries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HealthInsurances",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Percentage = table.Column<double>(type: "float", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HealthInsurances", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MaritalStatusTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MaritalStatusTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SexTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SexTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -189,6 +229,54 @@ namespace Citappuls.Migrations
                         column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Patients",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HealthInsuranceId = table.Column<int>(type: "int", nullable: false),
+                    HealthInsuranceNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Document = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nationality = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateofBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    MaritalStatusId = table.Column<int>(type: "int", nullable: false),
+                    SexTypeId = table.Column<int>(type: "int", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Patients_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Patients_HealthInsurances_HealthInsuranceId",
+                        column: x => x.HealthInsuranceId,
+                        principalTable: "HealthInsurances",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Patients_MaritalStatusTypes_MaritalStatusId",
+                        column: x => x.MaritalStatusId,
+                        principalTable: "MaritalStatusTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Patients_SexTypes_SexTypeId",
+                        column: x => x.SexTypeId,
+                        principalTable: "SexTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -348,6 +436,83 @@ namespace Citappuls.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Appointments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PatientId = table.Column<int>(type: "int", nullable: false),
+                    HospitalId = table.Column<int>(type: "int", nullable: false),
+                    SpecialityId = table.Column<int>(type: "int", nullable: false),
+                    DoctorId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    AppointmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StatusType = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Time = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Subsequent = table.Column<bool>(type: "bit", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Appointments_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Appointments_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Hospitals_HospitalId",
+                        column: x => x.HospitalId,
+                        principalTable: "Hospitals",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Specialties_SpecialityId",
+                        column: x => x.SpecialityId,
+                        principalTable: "Specialties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointments_DoctorId",
+                table: "Appointments",
+                column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointments_HospitalId",
+                table: "Appointments",
+                column: "HospitalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointments_PatientId",
+                table: "Appointments",
+                column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointments_SpecialityId",
+                table: "Appointments",
+                column: "SpecialityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointments_UserId",
+                table: "Appointments",
+                column: "UserId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -423,6 +588,12 @@ namespace Citappuls.Migrations
                 filter: "[LastName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_HealthInsurances_Name",
+                table: "HealthInsurances",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_HospitalDoctors_DoctorId",
                 table: "HospitalDoctors",
                 column: "DoctorId");
@@ -458,6 +629,32 @@ namespace Citappuls.Migrations
                 column: "SpecialityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Patients_CityId",
+                table: "Patients",
+                column: "CityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patients_FirstName_LastName_DateofBirth",
+                table: "Patients",
+                columns: new[] { "FirstName", "LastName", "DateofBirth" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patients_HealthInsuranceId",
+                table: "Patients",
+                column: "HealthInsuranceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patients_MaritalStatusId",
+                table: "Patients",
+                column: "MaritalStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patients_SexTypeId",
+                table: "Patients",
+                column: "SexTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SpecialityDoctors_DoctorId_SpecialityId",
                 table: "SpecialityDoctors",
                 columns: new[] { "DoctorId", "SpecialityId" },
@@ -491,6 +688,9 @@ namespace Citappuls.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Appointments");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -515,6 +715,9 @@ namespace Citappuls.Migrations
                 name: "SpecialityDoctors");
 
             migrationBuilder.DropTable(
+                name: "Patients");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -528,6 +731,15 @@ namespace Citappuls.Migrations
 
             migrationBuilder.DropTable(
                 name: "Specialties");
+
+            migrationBuilder.DropTable(
+                name: "HealthInsurances");
+
+            migrationBuilder.DropTable(
+                name: "MaritalStatusTypes");
+
+            migrationBuilder.DropTable(
+                name: "SexTypes");
 
             migrationBuilder.DropTable(
                 name: "Cities");

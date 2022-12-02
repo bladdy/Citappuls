@@ -26,6 +26,8 @@ namespace Citappuls.Data.Entities
         public int HospitalNumber => HospitalDoctors == null ? 0 : HospitalDoctors.Count;
         [Display(Name = "Especialidades")]
         public int EspecialidadesNumber => SpecialityDoctor == null ? 0 : SpecialityDoctor.Count;
+        [Display(Name = "Doctor")]
+        public string FullName => $"{Name} {LastName}";
 
         [Display(Name = "Ciudad")]
         public City City { get; set; }

@@ -28,7 +28,10 @@
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Agenda</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Appoitments" asp-action="Index">Citas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Index">Pacientes</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Doctors" asp-action="Index">Doctores</a>
@@ -49,17 +52,12 @@
                         @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Agenda</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Appoitments" asp-action="Index">Citas</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Doctores</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Index">Pacientes</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Countries" asp-action="Index">Paises</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Specialities" asp-action="Index">Especialidades</a>
-                            </li>
+                            
                         }
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Doctor"))
                         {

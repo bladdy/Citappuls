@@ -14,22 +14,28 @@ namespace Citappuls.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<Speciality> Specialties { get; set; }
         public DbSet<State> States { get; set; }
-
         public DbSet<Hospital> Hospitals { get; set; }
         public DbSet<HospitalDoctor> HospitalDoctors { get; set; }
         public DbSet<HospitalSpeciality> HospitalSpecialities { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<HealthInsurance> HealthInsurances { get; set; }
+        public DbSet<Patient> Patients { get; set; }
         public DbSet<SpecialityDoctor> SpecialityDoctors { get; set; }
+        public DbSet<SexType> SexTypes { get; set; }
+        public DbSet<MaritalStatusType> MaritalStatusTypes { get; set; }
+        public DbSet<Appointment> Appointments  { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<HealthInsurance>().HasIndex(hc => hc.Name).IsUnique();
             modelBuilder.Entity<City>().HasIndex("Name", "StateId").IsUnique();
             modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
             modelBuilder.Entity<State>().HasIndex("Name", "CountryId").IsUnique();
 
+            modelBuilder.Entity<Patient>().HasIndex("FirstName", "LastName", "DateofBirth").IsUnique();
             modelBuilder.Entity<Doctor>().HasIndex("Name", "LastName").IsUnique();
             modelBuilder.Entity<Speciality>().HasIndex(s => s.Name).IsUnique();
             modelBuilder.Entity<Hospital>().HasIndex(c => c.Name).IsUnique();
