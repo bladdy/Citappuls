@@ -32,6 +32,25 @@ namespace Citappuls.Controllers
                 .Include(hs => hs.HealthInsurance)
                 .ToListAsync());
         }
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Patient patient = await _context.Patients
+                .Include(a => a.HealthInsurance)
+                .Include(a => a.City)
+                .Include(u => u.SexType)
+                .Include(u => u.MaritalStatus)
+                .FirstOrDefaultAsync(s => s.Id == id);
+            if (patient == null)
+            {
+                return NotFound();
+            }
+            return View(patient);
+        }
         public async Task<IActionResult> CreateAppoitment(int? id)
         {
             if (id == null)
